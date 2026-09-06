@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/add_new_product.css' %}">
+    <title>Добавление товара</title>
+</head>
+<body>
+    <div class="product-card-container">
+        <div class="header">
+            <a class="back-link" href="#" onclick="history.back(); return false;">
+                <img class="back-icon" src="https://flaticon.com" alt="Назад" title="Назад">
+            </a>
+            <h1>Новый товар</h1>
+        </div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-container">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn-submit" type="submit">Создать карточку товара</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/logout.css' %}">
+    <title>Подтверждение выхода</title>
+</head>
+<body>
+    <div class="auth-card">
+        <div class="header">
+            <a class="back-link" href="#" onclick="history.back(); return false;">
+                <img class="back-icon" src="https://cdn-icons-png.flaticon.com/128/271/271218.png" alt="иконка назад" title="Назад">
+            </a>
+            <h1>Выход из аккаунта</h1>
+        </div>
+
+        <div class="form-container">
+            <p class="warning-text">Вы уверены, что хотите выйти? Вы потеряете доступ к кошельку до следующего входа.</p>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <div class="btn-group">
+                    <button type="submit" class="btn-submit">Да, выйти</button>
+                    <a href="#" onclick="history.back(); return false;" class="btn-cancel">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

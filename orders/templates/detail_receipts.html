@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/receipt_detail.css' %}">
+    <title>Чек № {{ receipt.receipt_number|truncatechars:12 }}</title>
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Кнопка возврата вынесена за пределы кассовой ленты -->
+        <div class="top-navigation">
+            <a class="back-link-btn" href="#" onclick="history.back(); return false;">
+                <img class="back-icon" src="https://flaticon.com" alt="Назад"> Вернуться назад
+            </a>
+        </div>
+
+        <!-- Кассовый чек -->
+        <div class="receipt-tape">
+            <div class="tape-header">
+                <h2>ООО "СУПЕРМАРКЕТ"</h2>
+                <p>ДОБРО ПОЖАЛОВАТЬ!</p>
+                <p class="fiscal-title">ЭЛЕКТРОННЫЙ ФИСКАЛЬНЫЙ ЧЕК</p>
+            </div>
+
+            <div class="tape-meta">
+                <p><strong>ДАТА:</strong> {{ receipt.created_at|date:"d.m.Y H:i:s" }}</p>
+                <p><strong>ЧЕК:</strong> {{ receipt.receipt_number }}</p>
+                <p><strong>ЗАКАЗ:</strong> № {{ receipt.order.id }}</p>
+                <p><strong>КЛИЕНТ:</strong> {{ receipt.order.user.name }}</p>
+            </div>
+
+            <div class="tape-divider">********************************</div>
+
+            <div class="tape-items">
+                <thead>
+                    <div class="item-header-row">
+                        <span>НАИМЕНОВАНИЕ</span>
+                        <span>СУММА</span>
+                    </div>
+                </thead>
+                <div class="tape-divider">--------------------------------</div>
+                <tbody>
+                    {% for item in receipt.order.items.all %}
+                        <div class="item-row">
+                            <div class="item-name">{{ item.product.name }}</div>
+                            <div class="item-calculation">
+                                {{ item.quantity }} шт. х {{ item.price }} ₽
+                            </div>
+                            <div class="item-total-cost">
+                                {{ item.get_cost }} ₽
+                            </div>
+                        </div>
+                    {% endfor %}
+                </tbody>
+            </div>
+
+            <div class="tape-divider">********************************</div>
+
+            <div class="tape-total">
+                <div class="total-row">
+                    <span>ИТОГ</span>
+                    <span class="total-price">{{ receipt.amount_paid }} ₽</span>
+                </div>
+                <div class="total-row payment-type">
+                    <span>ОПЛАТА: ЭЛ. КОШЕЛЕК</span>
+                    <span>{{ receipt.amount_paid }} ₽</span>
+                </div>
+            </div>
+
+            <div class="tape-divider">********************************</div>
+
+            <div class="tape-footer">
+                <p>СПАСИБО ЗА ПОКУПКУ!</p>
+                <p>СПАСИБО, ЧТО ВЫ С НАМИ!</p>
+                <div class="barcode-stub">[ ||||| | |||| ||| || | || ]</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/wallet_detail.css' %}">
+    <title>Мой Кошелек</title>
+</head>
+<body>
+    <div class="wallet-container">
+        <div class="header">
+            <a class="back-link" href="#" onclick="history.back(); return false;">
+                <img class="back-icon" src="https://flaticon.com" alt="Назад" title="Назад">
+            </a>
+            <h1>Электронный кошелек</h1>
+        </div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Визуальная карточка счета (Банковский стиль) -->
+        <div class="banking-card">
+            <div class="card-chip"></div>
+            <div class="card-balance-label">ДОСТУПНЫЙ БАЛАНС</div>
+            <div class="card-balance-value">{{ wallet.balance }} ₽</div>
+            <div class="card-footer-info">
+                <span class="card-holder">ID СЧЕТА: № {{ wallet.id }}</span>
+                <span class="card-date">ОТКРЫТ: {{ wallet.created_at|date:"d/m/y" }}</span>
+            </div>
+        </div>
+
+        <div class="wallet-actions">
+            <a href="{% url 'deposit_wallet' %}" class="btn-deposit-action">Пополнить баланс</a>
+            <a href="{% url 'all_products' %}" class="btn-catalog-action">Перейти к покупкам</a>
+        </div>
+    </div>
+</body>
+</html>

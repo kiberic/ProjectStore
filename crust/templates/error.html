@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка — Страница не найдена</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .error-card {
+            background-color: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 { font-size: 20px; color: #f87171; margin-bottom: 12px; }
+        p { color: #94a3b8; font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
+        .support-btn {
+            display: inline-block;
+            background-color: #0284c7;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .support-btn:hover { background-color: #0369a1; }
+    </style>
+</head>
+<body>
+
+    <div class="error-card">
+        <h1>Страница не найдена или произошла ошибка</h1>
+        <p>К сожалению, запрашиваемая страница не существует или произошел сбой. Если ошибка повторяется, напишите нам.</p>
+        
+        <a class="support-btn" href="mailto:supermarket_support2026@gmail.com?subject=Ошибка%20на%20сайте%20(Код%20{{ error_code|default:'404' }})&body=Здравствуйте!%20У%20меня%20возникла%20ошибка%20по%20адресу:%20{{ request.build_absolute_uri }}">
+            Написать в службу поддержки
+        </a>
+    </div>
+
+</body>
+</html>

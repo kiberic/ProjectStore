@@ -1,0 +1,191 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #e9ecef;
+    margin: 0;
+    padding: 30px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #000000;
+}
+
+.page-wrapper {
+    width: 100%;
+    max-width: 360px;
+}
+
+/* Кнопка навигации назад */
+.top-navigation {
+    margin-bottom: 15px;
+}
+
+.back-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #495057;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-weight: 500;
+    background: #fff;
+    padding: 8px 14px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.back-link-btn:hover {
+    background-color: #f8f9fa;
+}
+
+.back-link-btn .back-icon {
+    width: 14px;
+    height: 14px;
+}
+
+/* Лента бумажного чека */
+.receipt-tape {
+    background-color: #ffffff;
+    padding: 30px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-left: 2px dashed #ccc;
+    border-right: 2px dashed #ccc;
+}
+
+/* Имитация обрыва бумаги сверху и снизу */
+.receipt-tape::before, .receipt-tape::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background-size: 12px 6px;
+}
+
+.receipt-tape::before {
+    top: -6px;
+    background-image: linear-gradient(135deg, #ffffff 25%, transparent 25%), 
+                      linear-gradient(225deg, #ffffff 25%, transparent 25%);
+}
+
+.receipt-tape::after {
+    bottom: -6px;
+    background-image: linear-gradient(45deg, #ffffff 25%, transparent 25%), 
+                      linear-gradient(315deg, #ffffff 25%, transparent 25%);
+}
+
+.tape-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tape-header h2 {
+    margin: 0 0 5px 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.tape-header p {
+    margin: 4px 0;
+    font-size: 12px;
+}
+
+.fiscal-title {
+    margin-top: 10px !important;
+    font-weight: bold;
+    border: 1px solid #000;
+    padding: 4px;
+    display: inline-block;
+}
+
+.tape-meta {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.tape-meta p {
+    margin: 3px 0;
+    word-break: break-all;
+}
+
+.tape-divider {
+    text-align: center;
+    letter-spacing: 1px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* Список покупок */
+.tape-items {
+    margin: 15px 0;
+}
+
+.item-header-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.item-row {
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.item-name {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.item-calculation {
+    font-size: 11px;
+    color: #444;
+    margin: 2px 0;
+}
+
+.item-total-cost {
+    text-align: right;
+    margin-top: -15px;
+}
+
+/* Итоговые суммы */
+.tape-total {
+    margin: 15px 0;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.total-price {
+    font-size: 20px;
+}
+
+.payment-type {
+    font-size: 11px;
+    font-weight: normal;
+    margin-top: 8px;
+}
+
+/* Подвал чека */
+.tape-footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+.tape-footer p {
+    margin: 4px 0;
+}
+
+.barcode-stub {
+    margin-top: 20px;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #333;
+}

@@ -1,0 +1,121 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.auth-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 380px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.back-link:hover {
+    background-color: #f0f0f0;
+}
+
+.back-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.header h1 {
+    font-size: 22px;
+    color: #222;
+    margin: 0 auto 0 15px;
+    font-weight: 600;
+}
+
+.form-container p {
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 6px;
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-container input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #0069d9;
+}
+
+.messages p {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+    background: #f8d7da; 
+    color: #721c24; 
+    border: 1px solid #f5c6cb;
+}
+
+.auth-footer {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 25px;
+    color: #666;
+}
+.auth-footer a { color: #007bff; text-decoration: none; font-weight: 500; }
+.auth-footer a:hover { text-decoration: underline; }

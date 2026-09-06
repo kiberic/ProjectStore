@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/all_receipts.css' %}">
+    <title>История чеков</title>
+</head>
+<body>
+    <div class="receipts-container">
+        <div class="header">
+            <a class="back-link" href="#" onclick="history.back(); return false;">
+                <img class="back-icon" src="https://flaticon.com" alt="Назад" title="Назад">
+            </a>
+            <h1>Электронные чеки</h1>
+        </div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="table-wrapper">
+            {% if receipts %}
+                <table class="receipts-table">
+                    <thead>
+                        <tr>
+                            <th>Дата и время</th>
+                            <th>Фискальный ID чека</th>
+                            <th>Сумма операции</th>
+                            <th>Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for receipt in receipts %}
+                            <tr>
+                                <td class="td-date">{{ receipt.created_at|date:"d.m.Y H:i" }}</td>
+                                <td class="td-uuid"><code>{{ receipt.receipt_number }}</code></td>
+                                <td class="td-amount">{{ receipt.amount_paid }} ₽</td>
+                                <td class="td-action">
+                                    <a href="{% url 'receipt_detail' receipt_number=receipt.receipt_number %}" class="btn-open">Открыть</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📄</div>
+                    <p>История покупок пуста. Вы еще не оформляли заказы.</p>
+                    <a href="{% url 'all_products' %}" class="btn-shop">Перейти к покупкам</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

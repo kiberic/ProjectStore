@@ -1,0 +1,156 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+.receipts-container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 900px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.back-link:hover {
+    background-color: #f0f0f0;
+}
+
+.back-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.header h1 {
+    font-size: 22px;
+    color: #222;
+    margin: 0 auto 0 15px;
+    font-weight: 600;
+}
+
+/* Таблица логов чеков */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.receipts-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.receipts-table th {
+    background-color: #f1f3f5;
+    color: #495057;
+    padding: 12px 16px;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.receipts-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #dee2e6;
+    color: #333;
+}
+
+.receipts-table evils:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.receipts-table tr:hover {
+    background-color: #f1f3f5;
+}
+
+.td-date {
+    white-space: nowrap;
+    color: #666;
+}
+
+.td-uuid code {
+    background-color: #e9ecef;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+    color: #495057;
+}
+
+.td-amount {
+    font-weight: 600;
+    color: #28a745;
+}
+
+.btn-open {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn-open:hover {
+    background-color: #0069d9;
+}
+
+/* Пустая история */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.empty-state p {
+    color: #777;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.btn-shop {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.messages p {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+    background: #f8d7da;
+    color: #721c24;
+}

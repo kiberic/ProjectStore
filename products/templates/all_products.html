@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/all_products.css' %}">
+    <title>Каталог товаров</title>
+</head>
+<body>
+
+    <!-- Навигационная панель / Хэдер -->
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="logo">
+            SuperMarket
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'all_products' %}" class="active">Каталог</a>
+            {% if user %}
+                <a href="{% url 'all_receipts' %}">Мои чеки</a>
+                <a href="{% url 'detail_wallet' %}">Кошелек: <strong>{{ user.wallet.balance }} руб.</strong></a>
+                
+                {% if user.role == 'seller' %}
+                    <a href="{% url 'add_new_product' %}" class="btn-seller-nav">Добавить товар</a>
+                    <a href="{% url 'manage_inventory' %}" class="btn-seller-nav">Склад (Инвентарь)</a>
+                {% endif %}
+                
+                <form action="{% url 'logout' %}" method="post" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout">Выйти ({{ user.name }})</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-login">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Вывод уведомлений от бэкенда -->
+    {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Основной контент витрины -->
+    <main class="catalog-container">
+        <h1>Наши продукты</h1>
+        
+        <!-- Форма отправки заказа (позволяет покупать выбранные товары с количеством) -->
+        <form method="post" action="{% url 'create_order' %}">
+            {% csrf_token %}
+            
+            <div class="products-grid">
+                {% for product in products %}
+                    <div class="product-card {% if product.is_expired %}expired-shadow{% endif %}">
+                        
+                        <!-- Картинка товара -->
+                        <div class="product-image-box">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% else %}
+                                <div class="no-image">Нет фото</div>
+                            {% endif %}
+                            
+                            <!-- Значок категории -->
+                            <span class="category-badge">{{ product.category.get_name_display }}</span>
+                        </div>
+
+                        <!-- Инфо о товаре -->
+                        <div class="product-info">
+                            <h3>{{ product.name }}</h3>
+                            <p class="description">{{ product.body|truncatewords:10 }}</p>
+                            
+                            <div class="stock-status">
+                                Остаток: <strong>{{ product.quantity }} шт.</strong>
+                                {% if product.quantity == 0 %}
+                                    <span class="out-of-stock">Нет в наличии</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="price-row">
+                                <span class="price">{{ product.price }} ₽</span>
+                                
+                                {% if not product.is_expired and product.quantity > 0 %}
+                                    <!-- Чекбокс выбора товара для покупки -->
+                                    <label class="select-checkbox">
+                                        <input type="checkbox" name="product_ids" value="{{ product.id }}"> Купить
+                                    </label>
+                                {% endif %}
+                            </div>
+
+                            <!-- Если товар свежий и есть на складе — даем выбрать количество -->
+                            {% if not product.is_expired and product.quantity > 0 %}
+                                <div class="quantity-selector">
+                                    <label>Кол-во:</label>
+                                    <!-- Исправлено: имя завязано на ID товара для исключения багов с массивами -->
+                                    <input type="number" name="quantity_{{ product.id }}" value="1" min="1" max="{{ product.quantity }}">
+                                </div>
+                            {% elif product.is_expired %}
+                                <div class="expired-label">Товар просрочен!</div>
+                            {% endif %}
+
+                            <!-- КНОПКА ПРОСМОТРА ДЕТАЛЕЙ ТОВАРА -->
+                            <div class="product-actions-row">
+                                <a href="{% url 'detail_product' pk=product.id %}" class="btn-detail">Подробнее</a>
+                            </div>
+
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="empty-catalog">В каталоге пока нет ни одного товара.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Кнопка купить все выбранное (появляется если корзина не пуста) -->
+            {% if products %}
+                <div class="checkout-actions">
+                    <button type="submit" class="btn-checkout">Оформить выбранные товары</button>
+                </div>
+            {% endif %}
+        </form>
+    </main>
+
+</body>
+</html>

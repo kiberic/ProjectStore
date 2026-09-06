@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/create_order.css' %}">
+    <title>Оформление заказа</title>
+</head>
+<body>
+    <div class="order-card-container">
+        <div class="header">
+            <a class="back-link" href="#" onclick="history.back(); return false;">
+                ←
+            </a>
+            <h1>Подтверждение заказа</h1>
+        </div>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="order-summary-box">
+            <h3>Состав вашего заказа</h3>
+            <p class="info-text">Пожалуйста, проверьте выбранные позиции перед списанием средств с вашего личного кошелька.</p>
+            
+            <!-- Таблица списка выбранных товаров -->
+            <div class="order-table-container">
+                <table class="order-table">
+                    <thead>
+                        <tr>
+                            <th>Наименование</th>
+                            <th>Кол-во</th>
+                            <th>Цена</th>
+                            <th>Итого</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order_items %}
+                            <tr>
+                                <td class="item-name">{{ item.product.name }}</td>
+                                <td class="item-qty">{{ item.quantity }} шт.</td>
+                                <td class="item-price">{{ item.product.price }} тг.</td>
+                                <td class="item-total"><strong>{{ item.item_total }} тг.</strong></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Итоговая чек-панель -->
+            <div class="total-summary">
+                <div class="total-row">
+                    <span>Итого к оплате:</span>
+                    <span class="total-amount">{{ total_cost }} тг.</span>
+                </div>
+                <div class="balance-row">
+                    <span>Ваш баланс:</span>
+                    <span>{{ user.wallet.balance }} тг.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form method="post" action="{% url 'create_order' %}">
+                {% csrf_token %}
+                <!-- Скрытое маркерное поле для идентификации нажатия кнопки оплаты -->
+                <input type="hidden" name="confirm_payment" value="1">
+
+                <div class="security-notice">
+                    🔒 Все операции проводятся безопасно. Деньги будут списаны с вашего баланса автоматически в рамках одной транзакции.
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-submit" type="submit">Оплатить {{ total_cost }} тг.</button>
+                    <a href="#" onclick="history.back(); return false;" class="btn-cancel">Вернуться в каталог</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

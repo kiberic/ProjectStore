@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/manage_inventory.css' %}">
+    <title>ERP — Складские остатки</title>
+</head>
+
+<body class="erp-page">
+
+    <div class="erp-container">
+        <!-- Шапка -->
+        <header class="erp-header">
+            <div class="header-title">
+                <a class="back-btn" href="#" onclick="history.back(); return false;" title="Назад">←</a>
+                <h1>Управление запасами склада</h1>
+            </div>
+            <div class="header-info">Лимит на позицию: <strong>30 шт.</strong></div>
+        </header>
+
+        <!-- Системные уведомления -->
+        {% if messages %}
+        <div class="messages-block">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Таблица во весь экран -->
+        <div class="table-card">
+            <table class="erp-full-table">
+                <thead>
+                    <tr>
+                        <th class="th-id">ID</th>
+                        <th class="th-name">Товар</th>
+                        <th class="th-qty">Остаток</th>
+                        <th class="th-limit">Заполненность (макс. 30)</th>
+                        <th class="th-action">Быстрая операция по товару</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td class="td-id">#{{ product.id }}</td>
+                        <td class="td-name"><strong>{{ product.name }}</strong></td>
+                        <td class="td-qty">
+                            <span
+                                class="qty-badge {% if product.quantity >= 30 %}full{% elif product.quantity <= 5 %}danger{% else %}normal{% endif %}">
+                                {{ product.quantity }} шт.
+                            </span>
+                        </td>
+                        <td class="td-limit">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {% widthratio product.quantity 30 100 %}%;">
+                                </div>
+                            </div>
+                            <span class="progress-label">{{ product.quantity }} / 30</span>
+                        </td>
+                        <td class="td-action">
+                            <!-- Форма встроенная прямо в строку -->
+                            <form method="post" action="{% url 'manage_inventory' %}" class="inline-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                                <select name="tranzaction_type" class="form-select" required>
+                                    {% for key, value in tranzaction_types %}
+                                    <option value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                <input type="number" name="quantity_changed" class="form-input num-input" min="1"
+                                    max="30" placeholder="Кол-во" required>
+                                <input type="text" name="document_number" class="form-input doc-input"
+                                    placeholder="№ Накладной">
+                                <input type="text" name="reason" class="form-input reason-input"
+                                    placeholder="Причина / Комментарий">
+
+                                <button type="submit" class="btn-post">OK</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="empty">Товары на складе отсутствуют.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
